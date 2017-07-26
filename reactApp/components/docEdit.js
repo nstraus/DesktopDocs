@@ -23,12 +23,27 @@ class DocEdit extends React.Component {
         this.focus = () => this.refs.editor.focus();
     }
 
+    _saveDocument() {
+        const rawDraftContentState = JSON.stringify( convertToRaw(this.props.docEdit.state.editorState.getCurrentContent()) );
+        axios.post('http://localhost:3000/save', {
+            contentState: rawDraftContentState,
+            docId: this.props.docEdit.props.match.params.docid
+        })
+        .then(response => {
+            console.log('Document successfully saved');
+            //TODO implement a popup window alerting the user that doc has been saved
+        })
+        .catch(err => {
+            console.log('error saving document', err);
+        });
+    }
+
     componentWillMount() {
         axios.post("http://localhost:3000/loadDocument", {
             docId: this.state.docId
         })
         .then(response => {
-            const loadedContentState = convertFromRaw( JSON.parse(response.data.doc.contentState) );
+            const loadedContentState = convertFromRaw( JSON.parse(response.data.doc.contentState[response.data.doc.contentState.length - 1]) );
             this.setState({
                 editorState: EditorState.createWithContent(loadedContentState),
                 documentTitle: response.data.doc.title
@@ -42,6 +57,8 @@ class DocEdit extends React.Component {
 
     componentWillUnmount() {
         this.state.socket.emit('leftDocument', this.state.docId);
+        //this._saveDocument();
+        //clearInterval
     }
 
     render() {

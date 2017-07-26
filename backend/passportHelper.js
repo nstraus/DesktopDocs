@@ -23,20 +23,20 @@ function passportHelper( app ){
         User.findOne( { username: username }, function ( err, user ) {
           // if there's an error, finish trying to authenticate (auth failed)
             if ( err ) {
-                console.log( err );
+                //console.log( err );
                 return done( err );
             }
           // if no user present, auth failed
             if ( !user ) {
-                console.log( user );
+                //console.log( user );
                 return done( null, false, { message: 'Incorrect username.' } );
             }
           // if passwords do not match, auth failed
             if ( user.password !== password ) {
-                console.log( "wrongpassword", user );
+                ///console.log( "wrongpassword", user );
                 return done( null, false, { message: 'Incorrect password.' } );
             }
-            console.log( "rightone", user );
+            ///console.log( "rightone", user );
           // auth has has succeeded
             return done( null, user );
         } );

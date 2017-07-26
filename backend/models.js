@@ -15,7 +15,7 @@ var documentSchema = mongoose.Schema( {
         type: String,
         required: true
     },
-    contentState: Object
+    contentState: Array
 } );
 
 var User = mongoose.model( 'User', userSchema );
