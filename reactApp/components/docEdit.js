@@ -48,6 +48,8 @@ class DocEdit extends React.Component {
                 editorState: EditorState.createWithContent(loadedContentState),
                 documentTitle: response.data.doc.title
             });
+            //console.log('poopy')
+            //console.log('titleState', this.state.documentTitle)
             this.state.socket.emit('joinedDocument', this.state.docId);
         })
         .catch(err => {

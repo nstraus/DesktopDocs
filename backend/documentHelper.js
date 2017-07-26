@@ -52,8 +52,8 @@ function documentHelper( app ) {
           .then( doc => {
               doc.contentState.push(req.body.contentState);
               doc.save();
-              console.log("contentArray", doc.contentState);
-              console.log("length of Arraycontents", doc.contentState.length);
+              //console.log("contentArray", doc.contentState);
+              //console.log("length of Arraycontents", doc.contentState.length);
           })
           .catch(err => {
               console.log('error saving document in server', err);
@@ -63,6 +63,7 @@ function documentHelper( app ) {
     app.post('/loadDocument', function(req, res){
         Document.findById(req.body.docId)
           .then( doc => {
+              
               res.json( {success: true, doc});
           })
           .catch(err => {
